@@ -18,7 +18,7 @@ public class Product extends BaseModel {
     @Column(name = "id",nullable = false)
     private String id;
     @Column
-    private String name;
+    private String code;
     @Column
     private String image;
     @Column
