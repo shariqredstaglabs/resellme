@@ -5,6 +5,7 @@ import com.resellme.resellme.entity.Product;
 import com.resellme.resellme.repository.CatalogRepository;
 import com.resellme.resellme.repository.ProductRepository;
 import com.resellme.resellme.service.CatalogService;
+import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,12 +83,16 @@ class  ImageUpload extends Thread {
             try {
                 File folder = new File(destination + product.getId());
                 folder.mkdir();
-                logger.info(folder.getAbsolutePath());
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(folder.getAbsolutePath() + "/" + file.getOriginalFilename());
+                Path path = Paths.get(folder.getCanonicalPath() + "/" + file.getOriginalFilename());
                 Files.write(path, bytes);
                 logger.info("Image Saved " + file.getOriginalFilename());
-                product.setImage(folder.getCanonicalPath()+"\\"+file.getOriginalFilename());
+
+                File thumbnailFolder = new File(destination + product.getId()+"/thumbnail");
+                thumbnailFolder.mkdir();
+                Thumbnails.of(thumbnailFolder.getParentFile()+"/"+file.getOriginalFilename())
+                                .size(100,100).toFile(thumbnailFolder.getCanonicalPath()+"/"+ file.getOriginalFilename());
+                product.setImage(thumbnailFolder.getCanonicalPath()+ file.getOriginalFilename());
             } catch (IOException e) {
                 logger.info(e.getMessage());
             }
