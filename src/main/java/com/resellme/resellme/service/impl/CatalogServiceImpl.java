@@ -93,6 +93,7 @@ class  ImageUpload extends Thread {
                 Thumbnails.of(thumbnailFolder.getParentFile()+"/"+file.getOriginalFilename())
                                 .size(100,100).toFile(thumbnailFolder.getCanonicalPath()+"/"+ file.getOriginalFilename());
                 product.setImage(thumbnailFolder.getCanonicalPath()+ file.getOriginalFilename());
+                logger.info("Thumbnail  Saved " + file.getOriginalFilename());
             } catch (IOException e) {
                 logger.info(e.getMessage());
             }
