@@ -22,12 +22,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand add(Brand brand) {
-        try {
-            return brandRepository.save(brand);
-        }catch (Exception e){
-            logger.info(e.getMessage());
-        }
-        return null;
+        return brandRepository.save(brand);
     }
 
     @Override

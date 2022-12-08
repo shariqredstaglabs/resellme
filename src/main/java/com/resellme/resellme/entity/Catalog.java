@@ -30,7 +30,7 @@ public class Catalog {
     @Column
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "catalog_id")
-    private Set<Product> products;
+    private List<Product> products;
     @Column
     @CreatedDate
     private LocalDateTime postDate;
